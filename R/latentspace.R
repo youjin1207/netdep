@@ -4,59 +4,55 @@ library(mvrtn)
 
 #' Generate latent variable dependent network
 #'
-#' @param n.node The number of nodes in network
-#' @param rho correlation coefficient
+#' @param n.node The number of nodes in network.
+#' @param rho correlation coefficient between continuous observations and latent factor .
+#' @param dep.factor multiplicative factor applied to
+#' \itemize{
+#'    \item{If \code{dep.factor} < 0 }{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor}*| X_i - X_j |)) }
+#'    \item{If \code{dep.factor} \eqn{\ge} 0}{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor} / | X_i - X_j |)) }
+#'  }
 #'
-#' @return
+#' @import MASS
+#' @import mvrtn
+#' @import igraph
+#'
+#' @return an undirected and binary \code{igraph} object \code{G} having both \eqn{Y} and \eqn{U} as nodal attributes.
+#' \item{\code{V(G)$outcome}}{one-dimensional continuous observations.}
+#' \item{\code{V(G)$latent}}{one-dimensional continuous latent variable dependent on \code{V(G)$Y} through \code{rho}.}
 #' @export
 #'
 #' @examples
+#' library(netdep)
+#' library(MASS)
+#' library(mvrtn)
+#' library(igraph)
+#' G = latent.netdep(n.node = 100, rho = 0.5, factor = 1)
 #'
 #'
 #'
-latent.netdep = function(n.node, rho){
-  ### input
-  # n.node : the total number of population (N)
-  # rho : the correlation between a latent variable X and Y.
-  ### outout
-  # igraph G : having X and Y as nodal attributes
+#'
+latent.netdep = function(n.node, rho = 0.3, dep.factor = 1, dep.range = c(-5, 5)){
 
-  Sigma = matrix(c(1,rho,rho,1),2,2) # Covariance matrix
-  sample = mvrnorm(n = n.node, mu = c(0,0), Sigma ) # Generate n.node's samples (X,Y)
+  Sigma = matrix(c(1, rho, rho, 1),2,2)
+  sample = mvrnorm(n = n.node, mu = c(0,0), Sigma)
   X  = sample[,1]; Y = sample[,2]
-
-  prob = matrix(0, n.node, n.node) # initiate a probability (of sharing a tie) matrix
-  A = matrix(0, n.node, n.node) # initiate an adjacency matrix
-
-  for (i in 1:n.node) {
-    for (j in i:n.node) {
-      if (i == j) {
-        prob[i,j] = 0.0
+  prob = matrix(0, n.node, n.node)
+  A = matrix(0, n.node, n.node)
+  for (i in 1:(n.node-1) ) {
+    for (j in (i+1):(n.node)) {
+      dif = abs(X[i] - X[j])
+      if(dep.factor > 0 ){
+        tmp = min(dep.factor/dif, dep.range[2])
+      }else{
+        tmp = max(dep.factor*dif, dep.range[1])
       }
-      else if (i != j) {
-        dif = abs(X[i] - X[j])
-        if (dif < 0.01) dif = 0.01
-        if (dif < 0.10) {
-          val = 2 / (dif)
-        }else if(dif < 0.50){
-          val = dif
-        }else if(dif < 1.00){
-          val = - dif
-        }else if(dif < 1.50){
-          val = - 2*dif
-        }else{
-          val = -10*dif
-        }
-        prob[i,j] <- exp(val) / (1 + exp(val))
-      }
-      A[i,j] = rbinom(1, 1 , prob[i,j])
+      prob[i,j] = exp(tmp) / (1 + exp(tmp))
+      A[i,j] = rbinom(1, 1, prob[i,j])
       A[j,i] = A[i,j]
     }
   }
-
   G = graph.adjacency(A, "undirected")
   V(G)$outcome = Y
   V(G)$latent = X
-
   return(G)
 }

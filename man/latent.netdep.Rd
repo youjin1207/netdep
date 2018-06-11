@@ -4,17 +4,34 @@
 \alias{latent.netdep}
 \title{Generate latent variable dependent network}
 \usage{
-latent.netdep(n.node, rho)
+latent.netdep(n.node, rho = 0.3, dep.factor = 1, dep.range = c(-5, 5))
 }
 \arguments{
-\item{n.node}{The number of nodes in network}
+\item{n.node}{The number of nodes in network.}
 
-\item{rho}{correlation coefficient}
+\item{rho}{correlation coefficient between continuous observations and latent factor .}
+
+\item{dep.factor}{multiplicative factor applied to
+\itemize{
+   \item{If \code{dep.factor} < 0 }{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor}*| X_i - X_j |)) }
+   \item{If \code{dep.factor} \eqn{\ge} 0}{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor} / | X_i - X_j |)) }
+ }}
+}
+\value{
+an undirected and binary \code{igraph} object \code{G} having both \eqn{Y} and \eqn{U} as nodal attributes.
+\item{\code{V(G)$outcome}}{one-dimensional continuous observations.}
+\item{\code{V(G)$latent}}{one-dimensional continuous latent variable dependent on \code{V(G)$Y} through \code{rho}.}
 }
 \description{
 Generate latent variable dependent network
 }
 \examples{
+library(netdep)
+library(MASS)
+library(mvrtn)
+library(igraph)
+G = latent.netdep(n.node = 100, rho = 0.5, factor = 1)
+
 
 
 
