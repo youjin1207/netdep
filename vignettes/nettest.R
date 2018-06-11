@@ -1,28 +1,10 @@
----
-title: "Network dependence test"
-author: "Youjin Lee"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
+## ----setup, include = FALSE----------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
 
-## Generate network dependence
-
-We provide two data generative process for generating network dependent outcomes--network dependence due to (1) direct transmission and (2) latent variable dependence.
-
-Under direct transmission, `peer.process` provides time-evolving outcomes where $Y^{t}_{i}$ depends on $\{ Y^{t}_{j} : j \mbox{ is an adjacent peers of } i \}$. 
-
-```{r, message = FALSE, warning = FALSE}
+## ---- message = FALSE, warning = FALSE-----------------------------------
 library(knitr)
 library(netdep)
 library(MASS)
@@ -34,28 +16,20 @@ G = latent.netdep(n.node = 200, rho = 0.2, dep.factor = -1)
 A = as.matrix(get.adjacency(G))
 outcomes = peer.process(A, max.time = 3, mprob = 0.6, epsilon = 0.1)
 names(outcomes)
-```
 
-
-```{r}
+## ------------------------------------------------------------------------
 result0 = make.permute.moran(A, outcomes$time0, np = 500)
 result1 = make.permute.moran(A, outcomes$time1, np = 500)
 result2 = make.permute.moran(A, outcomes$time2, np = 500)
 result3 = make.permute.moran(A, outcomes$time3, np = 500)
-```
 
-```{r}
+## ------------------------------------------------------------------------
 kable(cbind( c("t=0", "t=1", "t=2", "t=3"),
   round(c(result0$moran, result1$moran, result2$moran, result3$moran),2),
   round(c(result0$pval.permute, result1$pval.permute, result2$pval.permute, result3$pval.permute),2)), row.names = NA, col.names = c("Transmission time", "Moran's I", "P-value (permutation)"), 
       caption = "Direct transmission")
-```
 
-Note from the above table that as `t` increases, Moran's $I$ statistic increases and p-value decreases. 
-
-Next we generate network dependent continuous outcomes via (2) latent variable dependence, and then transform those into categorical outcomes, where $\Phi$ statistic can be applicable to test network dependence.
-
-```{r}
+## ------------------------------------------------------------------------
 G = latent.netdep(n.node = 200, rho = 0.4, dep.factor = -1)
 subG = snowball.sampling(G, 100)$subG
 A = as.matrix(get.adjacency(subG))
@@ -67,14 +41,8 @@ table(cate.Y)
 result = make.permute.Phi(A, cate.Y, 500)
 print(result$phi)
 print(result$pval.permute)
-```
 
-
-## Real Data
-
-We first apply two test statistics in binary case -- faction of karate club.
-
-```{r}
+## ------------------------------------------------------------------------
 library(igraphdata)
 data(karate)
 A = as.matrix(as_adjacency_matrix(karate, attr= "weight", sparse = T)) # weighted adjacency matrix
@@ -86,13 +54,8 @@ print(result.moran$pval.permute)
 result.phi = make.permute.Phi(A, Y, np = 500)
 print(result.phi$phi)
 print(result.phi$pval.permute)
-```
 
-Observe that Moran's $I$ and $\Phi$ print out the same statistis.
-
-When outcome is categorical (nominal) but not binary, we can use $\Phi$.
-
-```{r}
+## ------------------------------------------------------------------------
 data(UKfaculty)
 A = as.matrix(as_adjacency_matrix(UKfaculty, attr= "weight", sparse = T)) # weighted adjacency matrix
 Y = V(UKfaculty)$Group
@@ -100,7 +63,4 @@ table(Y)
 result = make.permute.Phi(A, Y, np = 500)
 print(result$phi)
 print(result$pval.permute)
-```
 
-
-More details on the method and applications can be found in [Arxiv paper](https://arxiv.org/pdf/1710.03296.pdf).

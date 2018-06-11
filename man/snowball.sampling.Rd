@@ -16,7 +16,7 @@ snowball.sampling(G, samn)
 \item{\code{ind}}{a set of index of samples.}
 }
 \description{
-Sampling from one graph to its subgraph depending on network structure.
+Sampling from one graph to its induced subgraph depending on network structure.
 }
 \examples{
 library(netdep)

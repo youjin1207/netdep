@@ -11,7 +11,7 @@
 #' \deqn{p ~ Unif(0, mprob)}
 #' \deqn{Y^{t}_{i} = Y^t_i=  (1 - p)Y^{t-1}_i + p \sum\limits{j} A_{ij} Y^{t-1}_j / \sum_{j} A_{ij}  +  N(0, \epsilon) }{Y^t_i=  (1 - p)Y^{t-1}_i + p \sum_{j} A_ij Y^{t-1}_j / \sum_{j} A_ij  +  N(0, \epsilon) }
 #'
-#' @return a list of time-evolving outcomes from \texttt{time0} to \texttt{time(max.time)}.
+#' @return a list of time-evolving outcomes from \code{time0} to \code{time(max.time)}.
 #'
 #' @export
 #'
