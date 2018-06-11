@@ -12,5 +12,4 @@ install.packages("devtools")
 library(devtools)
 install_github("youjin1207/netdep")
 ```
-[Here](http://htmlpreview.github.io/?https://github.com/youjin1207/blob/master/vignettes/nettest.Rm) is a R vignettes for guidance.
-
+[Here](https://github.com/youjin1207/netdep/blob/master/vignettes/nettest.Rmd) is a R vignettes for guidance.
