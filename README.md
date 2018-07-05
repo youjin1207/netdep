@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/youjin1207/netdep.svg?branch=master)](https://travis-ci.org/youjin1207/netdep)
+
 # netdep
 R package for testing network dependence.
 
