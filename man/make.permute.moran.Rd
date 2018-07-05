@@ -26,7 +26,7 @@ library(netdep)
 library(igraph)
 library(igraphdata)
 data(karate)
-A = as.matrix(as_adjacency_matrix(karate, attr= "weight", sparse = T)) # weighted adjacency matrix
+A = as.matrix(get.adjacency(karate, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 Y = V(karate)$Faction
 result = make.permute.moran(A, Y, np = 500)
 

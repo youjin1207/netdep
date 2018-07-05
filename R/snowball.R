@@ -5,12 +5,11 @@
 #' @param G an \code{igraph} object.
 #' @param samn is a size of snowball sample that will be samples from \code{G}.
 #'
-#' @import igraph
+#' @importFrom igraph V induced.subgraph vcount neighbors V<-
 #'
 #' @return
 #' \item{\code{subG}}{an induced subgraph of \code{G} sampled using snowball sampling.}
 #' \item{\code{ind}}{a set of index of samples.}
-#'
 #'
 #' @export
 #'
@@ -19,8 +18,6 @@
 #' library(igraph)
 #' G = latent.netdep(n.node = 200, rho = 0.2, dep.factor = -3, dep.range = c(-10, 0))
 #' subG = snowball.sampling(G, 100)
-#'
-#'
 #'
 snowball.sampling = function(G, samn){
 

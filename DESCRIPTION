@@ -2,15 +2,15 @@ Package: netdep
 Type: Package
 Title: Testing for Network Dependence
 Version: 0.1.0
-Author@R: c(person("Youjin", "Lee", role = c("aut", "cre"),
+Authors@R: c(person("Youjin", "Lee", role = c("aut", "cre"),
 	   	    email = "ylee160@jhu.edu"),
 	   	 person("Elizabeth", "Ogburn", role="aut",
-	   	        email="eogburn@jhu.edu")
+	   	        email="eogburn@jhu.edu"))
 Maintainer: Youjin Lee <ylee160@jhu.edu>
-Imports: igraph, igraphdata, MASS, mvrtn
+Imports: stats, igraph, igraphdata, MASS, mvrtn
 Suggests: knitr
-Description: When network dependence is present, that is when social relations can engender dependence in the outcome of in- terest, treating such observations as independent results in invalid, anti-conservative statistical inference. We propose a test of independence among observations sampled from a single network. <arXiv:1710.03296>
-License: GPL-2
+Description: When network dependence is present, that is when social relations can engender dependence in the outcome of in- terest, treating such observations as independent results in invalid, anti-conservative statistical inference. We propose a test of independence among observations sampled from a single network <arXiv:1710.03296>.
+License: GPL (>=3) | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

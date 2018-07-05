@@ -2,7 +2,7 @@
 % Please edit documentation in R/latentspace.R
 \name{latent.netdep}
 \alias{latent.netdep}
-\title{Generate latent variable dependent network}
+\title{Generate latent variable dependent network.}
 \usage{
 latent.netdep(n.node, rho = 0.3, dep.factor = 1, dep.range = c(-5, 5))
 }
@@ -11,11 +11,13 @@ latent.netdep(n.node, rho = 0.3, dep.factor = 1, dep.range = c(-5, 5))
 
 \item{rho}{correlation coefficient between continuous observations and latent factor .}
 
-\item{dep.factor}{multiplicative factor applied to
+\item{dep.factor}{multiplicative factor applied to.
 \itemize{
    \item{If \code{dep.factor} < 0 }{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor}*| X_i - X_j |)) }
    \item{If \code{dep.factor} \eqn{\ge} 0}{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor} / | X_i - X_j |)) }
  }}
+
+\item{dep.range}{a vector specifying lower bound and upper bound for \code{dep.factor}*| X_i - X_j |. Defaults to \code{c(-5, 5)}.}
 }
 \value{
 an undirected and binary \code{igraph} object \code{G} having both \eqn{Y} and \eqn{U} as nodal attributes.
@@ -23,16 +25,14 @@ an undirected and binary \code{igraph} object \code{G} having both \eqn{Y} and \
 \item{\code{V(G)$latent}}{one-dimensional continuous latent variable dependent on \code{V(G)$Y} through \code{rho}.}
 }
 \description{
-Generate latent variable dependent network
+Generate latent variable dependent network.
 }
 \examples{
 library(netdep)
 library(MASS)
 library(mvrtn)
 library(igraph)
-G = latent.netdep(n.node = 100, rho = 0.5, factor = 1)
-
-
+G = latent.netdep(n.node = 100, rho = 0.5, dep.factor = 1)
 
 
 }

@@ -26,7 +26,7 @@ library(netdep)
 library(igraph)
 library(igraphdata)
 data(UKfaculty)
-A = as.matrix(as_adjacency_matrix(UKfaculty, attr= "weight", sparse = T)) # weighted adjacency matrix
+A = as.matrix(get.adjacency(UKfaculty, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 Y = V(UKfaculty)$Group
 result = make.permute.Phi(A, Y, np = 500)
 

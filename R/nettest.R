@@ -45,7 +45,10 @@ MoranI = function(A, Y){
 #' \item{\code{pval.permute}}{p-value of a standardized Moran's \eqn{I} statistic using \code{np} independent permutation samples.}
 #' @export
 #'
-#' @importFrom igraphdata
+#' @import igraphdata
+#' @importFrom igraph graph.adjacency get.adjacency
+#' @importFrom stats pnorm
+#'
 #'
 #' @author Youjin Lee
 #'
@@ -54,7 +57,7 @@ MoranI = function(A, Y){
 #' library(igraph)
 #' library(igraphdata)
 #' data(karate)
-#' A = as.matrix(as_adjacency_matrix(karate, attr= "weight", sparse = T)) # weighted adjacency matrix
+#' A = as.matrix(get.adjacency(karate, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 #' Y = V(karate)$Faction
 #' result = make.permute.moran(A, Y, np = 500)
 #'
@@ -90,13 +93,7 @@ make.permute.moran = function(A, Y, np = 100){
 #'
 #' @author Youjin Lee
 #'
-#' @examples
 phi.moment = function(A, Y){
-  ### input
-  # A : an adjacency matrix for the network structure
-  # Y : nominal observations
-  ### output
-  # Phi : (unstandardized) Phi
 
   A = as.matrix(A)
   n = length(Y)
@@ -167,7 +164,6 @@ phi.moment = function(A, Y){
 #' @author Youjin Lee
 #' @export
 #'
-#' @examples
 phi.stat = function(A, Y){
 
   phi.result = phi.moment(A, Y)
@@ -193,15 +189,17 @@ phi.stat = function(A, Y){
 #' \item{\code{pval.z}}{p-value of a standardized \eqn{\Phi} statistic assuming asymptotic normality.}
 #' \item{\code{pval.permute}}{p-value of a standardized \eqn{\Phi} statistic using \code{np} independent permutation samples.}
 #'
+#' @importFrom stats pnorm
 #' @export
 #' @author Youjin Lee
+#'
 #'
 #' @examples
 #' library(netdep)
 #' library(igraph)
 #' library(igraphdata)
 #' data(UKfaculty)
-#' A = as.matrix(as_adjacency_matrix(UKfaculty, attr= "weight", sparse = T)) # weighted adjacency matrix
+#' A = as.matrix(get.adjacency(UKfaculty, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 #' Y = V(UKfaculty)$Group
 #' result = make.permute.Phi(A, Y, np = 500)
 #'

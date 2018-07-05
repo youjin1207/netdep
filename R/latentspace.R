@@ -1,20 +1,17 @@
-library(igraph)
-library(MASS)
-library(mvrtn)
-
-#' Generate latent variable dependent network
+#' Generate latent variable dependent network.
 #'
 #' @param n.node The number of nodes in network.
 #' @param rho correlation coefficient between continuous observations and latent factor .
-#' @param dep.factor multiplicative factor applied to
+#' @param dep.factor multiplicative factor applied to.
 #' \itemize{
 #'    \item{If \code{dep.factor} < 0 }{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor}*| X_i - X_j |)) }
 #'    \item{If \code{dep.factor} \eqn{\ge} 0}{Then \eqn{A_ij} \eqn{~} Bern (logistic ( \code{dep.factor} / | X_i - X_j |)) }
 #'  }
+#' @param dep.range a vector specifying lower bound and upper bound for \code{dep.factor}*| X_i - X_j |. Defaults to \code{c(-5, 5)}.
 #'
-#' @import MASS
-#' @import mvrtn
-#' @import igraph
+#' @importFrom MASS mvrnorm
+#' @importFrom stats rbinom
+#' @importFrom igraph graph.adjacency V V<-
 #'
 #' @return an undirected and binary \code{igraph} object \code{G} having both \eqn{Y} and \eqn{U} as nodal attributes.
 #' \item{\code{V(G)$outcome}}{one-dimensional continuous observations.}
@@ -26,9 +23,7 @@ library(mvrtn)
 #' library(MASS)
 #' library(mvrtn)
 #' library(igraph)
-#' G = latent.netdep(n.node = 100, rho = 0.5, factor = 1)
-#'
-#'
+#' G = latent.netdep(n.node = 100, rho = 0.5, dep.factor = 1)
 #'
 #'
 latent.netdep = function(n.node, rho = 0.3, dep.factor = 1, dep.range = c(-5, 5)){

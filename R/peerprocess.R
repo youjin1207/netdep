@@ -13,10 +13,13 @@
 #'
 #' @return a list of time-evolving outcomes from \code{time0} to \code{time(max.time)}.
 #'
+#' @importFrom stats rnorm runif
 #' @export
 #'
 #' @examples
 #' library(netdep)
+#' library(igraph)
+#' library(stats)
 #' G = latent.netdep(n.node = 100, rho = 0.2)
 #' A = as.matrix(get.adjacency(G))
 #' outcomes = peer.process(A, max.time = 3, mprob = 0.3, epsilon = 0.5)
