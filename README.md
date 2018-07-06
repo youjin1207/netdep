@@ -34,4 +34,34 @@ install_github("youjin1207/netdep")
 vignette("nettest", package = "netdep")
 ```
 
+### Example
 
+```
+library(netdep)
+
+# generate network
+G = latent.netdep(n.node = 200, rho = 0.2, dep.factor = -1)
+A = as.matrix(get.adjacency(G))
+outcomes = peer.process(A, max.time = 3, mprob = 0.6, epsilon = 0.1)
+names(outcomes)
+result3 = make.permute.moran(A, outcomes$time3, np = 500)
+```
+
+```
+# generate latent variable dependent observations
+G = latent.netdep(n.node = 200, rho = 0.4, dep.factor = -1)
+subG = snowball.sampling(G, 100)$subG
+A = as.matrix(get.adjacency(subG))
+
+# transform continuous observations to categorical observations
+conti.Y = V(subG)$outcome 
+cate.Y = ifelse(conti.Y < quantile(conti.Y, 0.25), 1, 4)
+cate.Y = ifelse(conti.Y < quantile(conti.Y, 0.60) & conti.Y >= quantile(conti.Y, 0.25), 2, cate.Y)
+cate.Y = ifelse(conti.Y < quantile(conti.Y, 0.80) & conti.Y >= quantile(conti.Y, 0.60), 3, cate.Y)
+table(cate.Y)
+
+# apply network dependence for categorical variable
+result = make.permute.Phi(A, cate.Y, 500)
+print(result$phi)
+print(result$pval.permute)
+```
