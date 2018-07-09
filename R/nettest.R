@@ -59,7 +59,7 @@ MoranI = function(A, Y){
 #' data(karate)
 #' A = as.matrix(get.adjacency(karate, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 #' Y = V(karate)$Faction
-#' result = make.permute.moran(A, Y, np = 500)
+#' result = make.permute.moran(A, Y, np = 100)
 #'
 #'
 make.permute.moran = function(A, Y, np = 100){
@@ -201,7 +201,7 @@ phi.stat = function(A, Y){
 #' data(UKfaculty)
 #' A = as.matrix(get.adjacency(UKfaculty, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 #' Y = V(UKfaculty)$Group
-#' result = make.permute.Phi(A, Y, np = 500)
+#' result = make.permute.Phi(A, Y, np = 100)
 #'
 #'
 make.permute.Phi = function(A, Y, np){
