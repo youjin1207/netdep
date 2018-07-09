@@ -97,7 +97,7 @@ data(UKfaculty)
 A = as.matrix(as_adjacency_matrix(UKfaculty, attr= "weight", sparse = T)) # weighted adjacency matrix
 Y = V(UKfaculty)$Group
 table(Y)
-result = make.permute.Phi(A, Y, np = 100)
+result = make.permute.Phi(A, Y, np = 50)
 print(result$phi)
 print(result$pval.permute)
 ```

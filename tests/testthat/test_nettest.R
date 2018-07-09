@@ -34,7 +34,7 @@ test_that("Test whether network-dependent outcomes due to direct transmission pr
 
 test_that("Test that Moran's I and Phi are correctly derived", {
   set.seed(123)
-  G = latent.netdep(n.node = 100, rho = 0.2)
+  G = latent.netdep(n.node = 50, rho = 0.2)
   A = as.matrix(get.adjacency(G))
   Y = V(G)$outcome
   Y = ifelse(Y < 0, 0, 1)
