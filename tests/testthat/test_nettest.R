@@ -38,8 +38,8 @@ test_that("Test that Moran's I and Phi are correctly derived", {
   A = as.matrix(get.adjacency(G))
   Y = V(G)$outcome
   Y = ifelse(Y < 0, 0, 1)
-  result.phi = make.permute.Phi(A, Y, np = 100)
-  result.moran = make.permute.moran(A, Y, np = 100)
+  result.phi = make.permute.Phi(A, Y, np = 50)
+  result.moran = make.permute.moran(A, Y, np = 50)
 
   expect_true(abs(result.phi$phi-result.moran$moran) < 0.001)
 

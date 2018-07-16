@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/youjin1207/netdep.svg?branch=master)](https://travis-ci.org/youjin1207/netdep)
+![![Downloads badge](http://cranlogs.r-pkg.org/badges/netdep)](http://cranlogs.r-pkg.org/badges/netdep?color=red)
+[![arXiv shield](https://img.shields.io/badge/arXiv-1710.03296-blue.svg?style=flat)](https://arxiv.org/abs/1710.03296)
+
 
 ## Overview
 
@@ -44,7 +47,7 @@ G = latent.netdep(n.node = 200, rho = 0.2, dep.factor = -1)
 A = as.matrix(get.adjacency(G))
 outcomes = peer.process(A, max.time = 3, mprob = 0.6, epsilon = 0.1)
 names(outcomes)
-result3 = make.permute.moran(A, outcomes$time3, np = 500)
+result3 = make.permute.moran(A, outcomes$time3, np = 100)
 ```
 
 ```
@@ -61,7 +64,7 @@ cate.Y = ifelse(conti.Y < quantile(conti.Y, 0.80) & conti.Y >= quantile(conti.Y,
 table(cate.Y)
 
 # apply network dependence for categorical variable
-result = make.permute.Phi(A, cate.Y, 500)
+result = make.permute.Phi(A, cate.Y, 100)
 print(result$phi)
 print(result$pval.permute)
 ```

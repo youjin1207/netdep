@@ -10,7 +10,7 @@ Maintainer: Youjin Lee <ylee160@jhu.edu>
 Imports: stats, igraph, igraphdata, MASS, mvrtn
 Suggests: knitr,
     testthat
-Description: When network dependence is present, that is when social relations can engender dependence in the outcome of in- terest, treating such observations as independent results in invalid, anti-conservative statistical inference. We propose a test of independence among observations sampled from a single network <arXiv:1710.03296>.
+Description: When network dependence is present, that is when social relations can engender dependence in the outcome of interest, treating such observations as independent results in invalid, anti-conservative statistical inference. We propose a test of independence among observations sampled from a single network <arXiv:1710.03296>.
 License: GPL (>=3) | file LICENSE
 Encoding: UTF-8
 LazyData: true

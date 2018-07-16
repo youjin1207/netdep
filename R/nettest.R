@@ -201,7 +201,7 @@ phi.stat = function(A, Y){
 #' data(UKfaculty)
 #' A = as.matrix(get.adjacency(UKfaculty, attr= "weight", sparse = TRUE)) # weighted adjacency matrix
 #' Y = V(UKfaculty)$Group
-#' result = make.permute.Phi(A, Y, np = 100)
+#' result = make.permute.Phi(A, Y, np = 50)
 #'
 #'
 make.permute.Phi = function(A, Y, np){
